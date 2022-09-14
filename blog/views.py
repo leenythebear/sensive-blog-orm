@@ -62,7 +62,7 @@ def post_detail(request, slug):
 
     likes = post.likes.all()
 
-    related_tags = post.tags.all()
+    related_tags = post.tags.all().annotate(posts_count=Count("posts"))
 
     serialized_post = {
         "title": post.title,
