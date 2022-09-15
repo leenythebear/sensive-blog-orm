@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 class PostQuerySet(models.QuerySet):
-    def popular(self):
+    def popular_posts(self):
         popular_posts = self.annotate(Count("likes")).order_by("-likes__count")
         return popular_posts
 
@@ -60,7 +60,7 @@ class Post(models.Model):
 
 
 class TagQuerySet(models.QuerySet):
-    def popular(self):
+    def popular_tags(self):
         popular_tag = self.annotate(posts_count=Count("posts")).order_by(
             "-posts_count"
         )
