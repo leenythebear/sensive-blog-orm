@@ -17,6 +17,14 @@ def serialize_post(post):
     }
 
 
+def serialize_comments(comment):
+    return {
+        "text": comment.text,
+        "published_at": comment.published_at,
+        "author": comment.author.username,
+    }
+
+
 def serialize_tag(tag):
     return {
         "title": tag.title,
@@ -76,7 +84,9 @@ def post_detail(request, slug):
         "title": post.title,
         "text": post.text,
         "author": post.author.username,
-        "comments": serialized_comments,
+        "comments": [
+            serialize_comments(comment) for comment in post.comments.all()
+        ],
         "likes_amount": post.likes_count,
         "image_url": post.image.url if post.image else None,
         "published_at": post.published_at,
